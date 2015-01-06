@@ -22,7 +22,7 @@ fermions.quark("TemplateName",["codeblock1","codeblock2"]);
 
 It would call `codeblock1` and `codeblock2` when `Template.TemplateName` is rendered.
 
-You can also pass the object instead of a string as parameter.
+You can also pass the entire object as parameter without giving it a string identifier.
 ```javascript
 var electron = fermions.lepton(function(){
     //some code here
@@ -60,7 +60,7 @@ fermions.quark("upQuark",["muon"]).depends(["quarkName"]);
 #Setting variables when Template.created
 ```javascript
 fermions.lepton("electron", function(){
-    console.log(fermions.waveFunction);
+    console.log(fermions.waveFunction /* this is just a variable*/);
 });
 fermions.quark("downQuark",["electron"],{waveFunction:"collapsed"});
 fermions.quark("upQuark",["electron"],{waveFunction:"psi"});
@@ -78,25 +78,35 @@ fermions.lepton("neutrino", function(){
 fermions.quark("charmQuark",["neutrino"]); 
 ```
 
-The second function that is passed into the `.lepton` would be called on `Template.destroyed`;
+The second function that is passed into the `.lepton` would be called on `Template.destroyed`. This is another way of doing it:
+
+```javascript
+fermions.quark("charmQuark",[fermions.lepton(function(){
+    //code here would be called on Template.rendered
+},function(){
+   //code here would be called on Template.destroyed
+})]); 
+```
 
 #Mobile view
 
 ```javascript
-fermions.mobileView(700); //this would assume that it is a mobile device if the window's width is smaller than 700 
+fermions.mobileView(700); //this would assume that it is a mobile device if the window's width is smaller than 700px
 fermions.lepton("neutrino", function(){
-    //code here would be called no matter if you are in mobile view or not
+    //code here would be called no matter if it is a mobile device or not
 }).addToFn("mobile",function(){
-   //code here would only be called if it is morible view
+   //code here would only be called if it is a morible device
 }).addToFn("default",function(){
-  //code here would only be called if it is not mobile view
+  //code here would only be called if it is not a mobile device
 });
 fermions.quark("topQuark",["neutrino"]); 
 ```
 
-If `fermions.mobileView(max_width)` is not called, the function in `addToFn("default",function)` would always be called and `addToFn("mobile",function)` would never be called.
+If `fermions.mobileView(max_width)` is not called, the function in `addToFn("default",function)` would always be called and `addToFn("mobile",function)` would never be called. 
 
-#Cleaning up the function in a lepton
+You can always append more code into the function by using `.addToFn`.
+
+#Cleaning up the function(s) in a lepton
 ```javascript
 electron.reset() //reset both default and mobile
 electron.reset("mobile") //only reset mobile
