@@ -1,6 +1,6 @@
 #Fermions
 
-A Meteor pacakge for writing reusable cilent-side codes for Templates. 
+A package for writing reusable client-side JS on Meteor. 
 
 #QuickStart
 Add it to your Meteor project
@@ -22,7 +22,7 @@ fermions.quark("TemplateName",["codeblock1","codeblock2"]);
 
 It would call `codeblock1` and `codeblock2` when `Template.TemplateName` is rendered.
 
-You can also do it this way with a variable:
+You can also pass the object instead of a string as parameter.
 ```javascript
 var electron = fermions.lepton(function(){
     //some code here
@@ -30,7 +30,7 @@ var electron = fermions.lepton(function(){
 fermions.quark("TemplateName",[electron]); 
 ```
 
-#Dependecy
+#Dependency
 ```javascript
 fermions.lepton("electron", function(){
     //some schrodinger's cat here
