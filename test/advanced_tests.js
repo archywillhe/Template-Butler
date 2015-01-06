@@ -28,3 +28,19 @@ Tinytest.addAsync('quark with leptons (depends on other quarks): loaded', functi
     });
     Blaze.render(Template.depend, $("body")[0]);
 });
+
+Tinytest.addAsync('On Template.destroyed', function(test, complete) {
+    Template.q = new Blaze.Template("Template.q", function() {});
+    var d;
+    fermions.lepton("x",
+        function() {
+            d = 1;
+            Blaze.remove(Blaze.currentView);
+        },
+        function() {
+            test.equal(d, 1);
+            complete();
+        });
+    fermions.quark("q", ["x"]);
+    Blaze.render(Template.q, $("body")[0]);
+});

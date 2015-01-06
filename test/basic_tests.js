@@ -19,3 +19,12 @@ Tinytest.addAsync('independent quark with leptons', function (test,complete) {
     var spaceTime = fermions.quark("spaceTime",[cubism,"test"]); 
     Blaze.render(Template.spaceTime,$("body")[0]);
 });
+
+Tinytest.add('Setting variables when Template.created', function(test) {
+    Template.a = new Blaze.Template("Template.a", function() {});
+    fermions.lepton("x",function(){});
+    fermions.quark("a", ["x"],{hey:"yo"});
+    Blaze.render(Template.a, $("body")[0]);
+    test.equal(fermions.env.hey,"yo");
+});
+
