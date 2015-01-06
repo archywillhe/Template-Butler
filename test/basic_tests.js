@@ -3,12 +3,12 @@ Tinytest.add('init', function (test) {
 });
 
 Tinytest.addAsync('independent quark with leptons', function (test,complete) {  
-    var cubism = fermions.leptons();
+    var cubism = fermions.lepton();
     cubism.addToFn("default",function(){
         $("body").append("<div id='archy'/>");
     });
-    var leptons = fermions.leptons("test");
-    leptons.addToFn("default",function(){
+    var lepton = fermions.lepton("test");
+    lepton.addToFn("default",function(){
         if($("#archy")[0]!== undefined){
             complete();
         }else{

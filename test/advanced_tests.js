@@ -1,11 +1,11 @@
-var leptons;
+var lepton;
 Tinytest.addAsync('quark with leptons (depends on other quarks): waiting', function(test, complete) {
-    var cubism = fermions.leptons();
+    var cubism = fermions.lepton();
     cubism.addToFn("default", function() {
         $("body").append("<div id='archy'/>");
     });
-    leptons = fermions.leptons("test2");
-    leptons.addToFn("default", function() {
+    lepton = fermions.lepton("test2");
+    lepton.addToFn("default", function() {
         test.fail();
     });
     Template.depend = new Blaze.Template("Template.depend", function() {});
@@ -21,8 +21,8 @@ Tinytest.addAsync('quark with leptons (depends on other quarks): waiting', funct
 });
 
 Tinytest.addAsync('quark with leptons (depends on other quarks): loaded', function(test, complete) {
-    leptons.reset();
-    leptons.addToFn("default", function() {
+    lepton.reset();
+    lepton.addToFn("default", function() {
         test.ok();
         complete();
     });
