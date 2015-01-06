@@ -1,8 +1,8 @@
 Package.describe({
     name: 'arch:fermions',
-    summary: 'Writing reusable cilent side codes.',
+    summary: 'Writing reusable cilent-side codes on Meteor.',
     version: '0.1.0',
-    git: ' /* Fill me in! */ '
+    git: 'https://github.com/0a-/fermions'
 });
 
 Package.onUse(function(api) {
