@@ -36,9 +36,7 @@ Tinytest.addAsync('On Template.destroyed', function(test, complete) {
         function() {
             d = 1;
             view = Blaze.currentView;
-            setTimeout(function(){
-                Blaze.remove(view);
-            },500);
+            Blaze.remove(view);
         },
         function() {
             test.equal(d, 1);
