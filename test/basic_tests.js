@@ -28,3 +28,20 @@ Tinytest.add('Setting variables when Template.created', function(test) {
     test.equal(fermions.env.hey,"yo");
 });
 
+
+Tinytest.addAsync('Mobile view',function(test,complete){
+    Template.a = new Blaze.Template("Template.a", function() {});
+    fermions.mobileView(9999);
+    fermions.lepton("po",function(){
+        test.ok();
+    }).addToFn("mobile",function(){
+        test.ok();
+        fermions.mobileView(10);
+        complete();
+    }).addToFn("default",function(){
+        test.fail();
+        complete();
+    });
+    fermions.quark("a", ["po"]);
+    Blaze.render(Template.a, $("body")[0]);
+});
