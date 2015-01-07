@@ -5,7 +5,7 @@ A package for writing reusable client-side JS on Meteor.
 #QuickStart
 Add it to your Meteor project
 ```bash
-meteor add arch:Fermions
+meteor add arch:fermions
 ```
 
 #Basic Usage
