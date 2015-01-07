@@ -1,11 +1,11 @@
-#Fermions
+#What is Fermions
 
-A package for writing reusable client-side JS on Meteor. 
+Fermions is a library for writing reusable client-side JS for Templates on Meteor.
 
 #QuickStart
-Add it to your Meteor project
+Add the Fermions pacakge it to your Meteor project
 ```bash
-meteor add arch:Fermions
+meteor add arch:fermions
 ```
 
 #Basic Usage
