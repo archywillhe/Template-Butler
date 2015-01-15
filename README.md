@@ -1,6 +1,6 @@
 #What is Fermions
 
-Fermions is a library for writing reusable client-side JS for Templates on Meteor.
+Fermions is a library for writing reusable client-side JS for Templates on Meteor. It is designed for apps with sophisticated front-end logics.
 
 #QuickStart
 Add the Fermions pacakge it to your Meteor project
@@ -8,7 +8,10 @@ Add the Fermions pacakge it to your Meteor project
 meteor add arch:fermions
 ```
 
+
 #Basic Usage
+
+>You add the logics to <b>lepton</b>, and you use <b>quark</b> to bind a template with lepton.
 
 ```javascript
 Fermions.lepton("codeblock1", function(){
@@ -20,9 +23,9 @@ Fermions.lepton("codeblock2", function(){
 Fermions.quark("TemplateName",["codeblock1","codeblock2"]); 
 ```
 
-It would call `codeblock1` and `codeblock2` when `Template.TemplateName` is rendered.
+This would call `codeblock1` and `codeblock2` when `Template.TemplateName` is rendered.
 
-You can also pass the entire object as parameter without giving it a string identifier.
+You can also pass the object as parameter without giving it a string identifier.
 ```javascript
 var electron = Fermions.lepton(function(){
     //some code here
@@ -46,7 +49,7 @@ Fermions.quark("downQuark",["electron"]);
 Fermions.quark("upQuark",["muon"]).depends(["downQuark"]); //name of the quark(s) to depend on
 Fermions.quark("upQuark",["tau"]);
 ```
-After `upQuark` is rendered, `muon` would not be called until `Template.downQuark` is rendered. However, `tau` would be called because it does not depend on anything.
+After `upQuark` is rendered, `muon` would not be called until `Template.downQuark` is rendered. However, `tau` would be called immediately after `upQuark` is rendered because it does not depend on anything.
 
 
 Note: Unless an object `{TemplateName:"quarkName"}` is passed as the 1st arguement, a quark would have the same name as the Template.
@@ -78,7 +81,7 @@ Fermions.lepton("neutrino", function(){
 Fermions.quark("charmQuark",["neutrino"]); 
 ```
 
-The second function that is passed into the `.lepton` would be called on `Template.destroyed`. This is another way of doing it:
+The 2nd function that is passed into the `.lepton` would be called on `Template.destroyed`. This is another way of doing it:
 
 ```javascript
 Fermions.quark("charmQuark",[Fermions.lepton(function(){
@@ -102,7 +105,7 @@ Fermions.lepton("neutrino", function(){
 Fermions.quark("topQuark",["neutrino"]); 
 ```
 
-If `Fermions.mobileView(max_width)` is not called, the function in `addToFn("default",function)` would always be called and `addToFn("mobile",function)` would never be called. 
+If `Fermions.mobileView(max_width)` is not called, the function in `addToFn("default",function)` would always be called. 
 
 You can always append more code into the function by using `.addToFn`.
 
