@@ -1,9 +1,9 @@
 #What is Fermions
 
-Fermions is a library for writing reusable client-side JS for Templates on Meteor. It is designed for apps with sophisticated front-end logics.
+Fermions is a library for writing reusable client-side JS for Templates on Meteor. It is designed for apps with sophisticated DOM view logic.
 
 #QuickStart
-Add the Fermions pacakge it to your Meteor project
+Add Fermions to your Meteor project
 ```bash
 meteor add arch:fermions
 ```
@@ -11,7 +11,7 @@ meteor add arch:fermions
 
 #Basic Usage
 
->You add the logics to <b>lepton</b>, and you use <b>quark</b> to bind a template with lepton.
+>You add the logic to <b>lepton</b>, and you use <b>quark</b> to bind a template with lepton.
 
 ```javascript
 Fermions.lepton("codeblock1", function(){
@@ -49,7 +49,7 @@ Fermions.quark("downQuark",["electron"]);
 Fermions.quark("upQuark",["muon"]).depends(["downQuark"]); //name of the quark(s) to depend on
 Fermions.quark("upQuark",["tau"]);
 ```
-After `upQuark` is rendered, `muon` would not be called until `Template.downQuark` is rendered. However, `tau` would be called immediately after `upQuark` is rendered because it does not depend on anything.
+After `Template.upQuark` is rendered, `muon` would not be called until `Template.downQuark` is rendered. However, `tau` would be called immediately after `Template.upQuark` is rendered because it does not depend on anything.
 
 
 Note: Unless an object `{TemplateName:"quarkName"}` is passed as the 1st arguement, a quark would have the same name as the Template.
@@ -81,7 +81,9 @@ Fermions.lepton("neutrino", function(){
 Fermions.quark("charmQuark",["neutrino"]); 
 ```
 
-The 2nd function that is passed into the `.lepton` would be called on `Template.destroyed`. This is another way of doing it:
+The 2nd function that is passed into the `.lepton` would be called on `Template.destroyed`.
+
+This is another way of doing it:
 
 ```javascript
 Fermions.quark("charmQuark",[Fermions.lepton(function(){
@@ -96,18 +98,18 @@ Fermions.quark("charmQuark",[Fermions.lepton(function(){
 ```javascript
 Fermions.mobileView(700); //this would assume that it is a mobile device if the window's width is smaller than 700px
 Fermions.lepton("neutrino", function(){
-    //code here would be called no matter if it is a mobile device or not
+    //called no matter if it is a mobile device or not
 }).addToFn("mobile",function(){
-   //code here would only be called if it is a morible device
+   //called if it is a morible device
 }).addToFn("default",function(){
-  //code here would only be called if it is not a mobile device
+  //called if it is not a mobile device
 });
 Fermions.quark("topQuark",["neutrino"]); 
 ```
 
 If `Fermions.mobileView(max_width)` is not called, the function in `addToFn("default",function)` would always be called. 
 
-You can always append more code into the function by using `.addToFn`.
+You can always append more code into the lepton by using `.addToFn`.
 
 #Cleaning up the function(s) in a lepton
 ```javascript
