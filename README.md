@@ -1,9 +1,9 @@
-#What is TBulter
+#What is Butler
 
-TBulter (aka Template Bulter) is a library for writing reusable client-side JS for Templates on Meteor. It is designed for apps with sophisticated DOM view logic.
+Butler (aka Template Bulter) is a library for writing reusable client-side JS for Templates on Meteor. It is designed for apps with sophisticated DOM view logic.
 
 #QuickStart
-Add TBulter to your Meteor project
+Add Butler to your Meteor project
 ```bash
 meteor add arch:template-bulter
 ```
@@ -13,40 +13,40 @@ meteor add arch:template-bulter
 
 
 ```javascript
-TBulter.makeLogic("codeblock1", function(){
+Butler.makeLogic("codeblock1", function(){
     //some code here
 });
-TBulter.makeLogic("codeblock2", function(){
+Butler.makeLogic("codeblock2", function(){
     //some code here
 });
-TBulter.bond("TemplateName",["codeblock1","codeblock2"]); 
+Butler.bond("TemplateName",["codeblock1","codeblock2"]); 
 ```
 
 This would call `codeblock1` and `codeblock2` when `Template.TemplateName` is rendered.
 
 You can also pass the object as parameter without giving it a string identifier.
 ```javascript
-var electron = TBulter.makeLogic(function(){
+var electron = Butler.makeLogic(function(){
     //some code here
 });
-TBulter.bond("TemplateName",[electron]); 
+Butler.bond("TemplateName",[electron]); 
 ```
 
 #Dependency
 ```javascript
-TBulter.makeLogic("electron", function(){
+Butler.makeLogic("electron", function(){
     //some schrodinger's cat here
 });
-TBulter.makeLogic("muon", function(){
+Butler.makeLogic("muon", function(){
     //some schrodinger's cat here
 });
-TBulter.makeLogic("tau", function(){
+Butler.makeLogic("tau", function(){
     //some schrodinger's cat here
 });
 
-TBulter.bond("downQuark",["electron"]);
-TBulter.bond("upQuark",["muon"]).depends(["downQuark"]); //name of the bond(s) to depend on
-TBulter.bond("upQuark",["tau"]);
+Butler.bond("downQuark",["electron"]);
+Butler.bond("upQuark",["muon"]).depends(["downQuark"]); //name of the bond(s) to depend on
+Butler.bond("upQuark",["tau"]);
 ```
 After `Template.upQuark` is rendered, `muon` would not be called until `Template.downQuark` is rendered. However, `tau` would be called immediately after `Template.upQuark` is rendered because it does not depend on anything.
 
@@ -54,29 +54,29 @@ After `Template.upQuark` is rendered, `muon` would not be called until `Template
 Note: Unless an object `{TemplateName:"bondName"}` is passed as the 1st arguement, a bond would have the same name as the Template.
 
 ```javascript
-TBulter.bond({TemplateName:"bondName"},["codeblock1","codeblock2"]);
-TBulter.bond("upQuark",["muon"]).depends(["bondName"]);
+Butler.bond({TemplateName:"bondName"},["codeblock1","codeblock2"]);
+Butler.bond("upQuark",["muon"]).depends(["bondName"]);
 ```
 
 #Setting variables when Template.created
 ```javascript
-TBulter.makeLogic("electron", function(){
-    console.log(TBulter.waveFunction /* this is just a variable*/);
+Butler.makeLogic("electron", function(){
+    console.log(Butler.waveFunction /* this is just a variable*/);
 });
-TBulter.bond("downQuark",["electron"],{waveFunction:"collapsed"});
-TBulter.bond("upQuark",["electron"],{waveFunction:"psi"});
+Butler.bond("downQuark",["electron"],{waveFunction:"collapsed"});
+Butler.bond("upQuark",["electron"],{waveFunction:"psi"});
 ```
 This would log "collapsed" after `Template.downQuark` is rendered, and "psi" after `Template.upQuark` is rendered.
 
 #On Template.destroyed
 
 ```javascript
-TBulter.makeLogic("neutrino", function(){
+Butler.makeLogic("neutrino", function(){
     //code here would be called on Template.rendered
 },function(){
    //code here would be called on Template.destroyed
 });
-TBulter.bond("charmQuark",["neutrino"]); 
+Butler.bond("charmQuark",["neutrino"]); 
 ```
 
 The 2nd function that is passed into the `.makeLogic` would be called on `Template.destroyed`.
@@ -84,7 +84,7 @@ The 2nd function that is passed into the `.makeLogic` would be called on `Templa
 This is another way of doing it:
 
 ```javascript
-TBulter.bond("charmQuark",[TBulter.makeLogic(function(){
+Butler.bond("charmQuark",[Butler.makeLogic(function(){
     //code here would be called on Template.rendered
 },function(){
    //code here would be called on Template.destroyed
@@ -94,18 +94,18 @@ TBulter.bond("charmQuark",[TBulter.makeLogic(function(){
 #Mobile view
 
 ```javascript
-TBulter.mobileView(700); //this would assume that it is a mobile device if the window's width is smaller than 700px
-TBulter.makeLogic("neutrino", function(){
+Butler.mobileView(700); //this would assume that it is a mobile device if the window's width is smaller than 700px
+Butler.makeLogic("neutrino", function(){
     //called no matter if it is a mobile device or not
 }).addToFn("mobile",function(){
    //called if it is a morible device
 }).addToFn("default",function(){
   //called if it is not a mobile device
 });
-TBulter.bond("topQuark",["neutrino"]); 
+Butler.bond("topQuark",["neutrino"]); 
 ```
 
-If `TBulter.mobileView(max_width)` is not called, the function in `addToFn("default",function)` would always be called. 
+If `Butler.mobileView(max_width)` is not called, the function in `addToFn("default",function)` would always be called. 
 
 You can always append more code into the makeLogic by using `.addToFn`.
 

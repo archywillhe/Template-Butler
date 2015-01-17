@@ -10,7 +10,7 @@ Package.onUse(function(api) {
     //commented out because of https://github.com/mquandalle/meteor-harmony/issues/37
     // api.use('mquandalle:harmony');
     api.addFiles('lib/core.js', 'client');
-    api.export('TBulter','client');
+    api.export('Butler','client');
 });
 
 Package.onTest(function(api) {
