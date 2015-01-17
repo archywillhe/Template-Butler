@@ -1,8 +1,8 @@
 Package.describe({
-    name: 'arch:template-bulter',
+    name: 'arch:template-butler',
     summary: 'Writing reusable cilent-side codes on Meteor.',
     version: '1.0.0',
-    git: 'https://github.com/0a-/template-bulter'
+    git: 'https://github.com/0a-/butler'
 });
 
 Package.onUse(function(api) {
@@ -15,7 +15,7 @@ Package.onUse(function(api) {
 
 Package.onTest(function(api) {
     api.use('tinytest');
-    api.use('arch:template-bulter');
+    api.use('arch:template-butler');
     api.addFiles('test/basic_tests.js','client');
     api.addFiles('test/advanced_tests.js','client');
 });

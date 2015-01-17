@@ -1,11 +1,11 @@
 #What is Butler
 
-Butler (aka Template Bulter) is a library for writing reusable client-side JS for Templates on Meteor. It is designed for apps with sophisticated DOM view logic.
+Butler (aka Template Butler) is a library for writing reusable client-side JS for Templates on Meteor. It is designed for apps with sophisticated DOM view logic.
 
 #QuickStart
 Add Butler to your Meteor project
 ```bash
-meteor add arch:template-bulter
+meteor add arch:template-butler
 ```
 
 
