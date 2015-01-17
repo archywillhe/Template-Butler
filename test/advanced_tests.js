@@ -1,17 +1,17 @@
 var lepton;
 Tinytest.addAsync('quark with leptons (depends on other quarks): waiting', function(test, complete) {
-    var cubism = Fermions.lepton();
+    var cubism = TBulter.makeLogic();
     cubism.addToFn("default", function() {
         $("body").append("<div id='archy'/>");
     });
-    lepton = Fermions.lepton("test2");
+    lepton = TBulter.makeLogic("test2");
     lepton.addToFn("default", function() {
         test.fail();
     });
     Template.depend = new Blaze.Template("Template.depend", function() {});
     Template.quark = new Blaze.Template("Template.quark", function() {});
-    var quark = Fermions.quark("quark", [cubism, "test2"]);
-    var depend = Fermions.quark("depend");
+    var quark = TBulter.bond("quark", [cubism, "test2"]);
+    var depend = TBulter.bond("depend");
     quark.quarksToDependOn = ["depend"];
     Blaze.render(Template.quark, $("body")[0]);
     setTimeout(function() {
@@ -32,7 +32,7 @@ Tinytest.addAsync('quark with leptons (depends on other quarks): loaded', functi
 Tinytest.addAsync('On Template.destroyed', function(test, complete) {
     Template.q = new Blaze.Template("Template.q", function() {});
     var d, view;
-    Fermions.lepton("z",
+    TBulter.makeLogic("z",
         function() {
             d = 1;
             view = Blaze.currentView;
@@ -42,6 +42,6 @@ Tinytest.addAsync('On Template.destroyed', function(test, complete) {
             test.equal(d, 1);
             complete();
         });
-    Fermions.quark("q", ["z"]);
+    TBulter.bond("q", ["z"]);
     Blaze.render(Template.q, $("body")[0]);
 });

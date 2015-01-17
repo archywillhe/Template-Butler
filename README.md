@@ -1,92 +1,90 @@
-#What is Fermions
+#What is TBulter
 
-Fermions is a library for writing reusable client-side JS for Templates on Meteor. It is designed for apps with sophisticated DOM view logic.
+TBulter (aka Template Bulter) is a library for writing reusable client-side JS for Templates on Meteor. It is designed for apps with sophisticated DOM view logic.
 
 #QuickStart
-Add Fermions to your Meteor project
+Add TBulter to your Meteor project
 ```bash
-meteor add arch:fermions
+meteor add arch:template-bulter
 ```
 
 
 #Basic Usage
 
->You add the logic to <b>lepton</b>, and you use <b>quark</b> to bind a template with lepton.
 
 ```javascript
-Fermions.lepton("codeblock1", function(){
+TBulter.makeLogic("codeblock1", function(){
     //some code here
 });
-Fermions.lepton("codeblock2", function(){
+TBulter.makeLogic("codeblock2", function(){
     //some code here
 });
-Fermions.quark("TemplateName",["codeblock1","codeblock2"]); 
+TBulter.bond("TemplateName",["codeblock1","codeblock2"]); 
 ```
 
 This would call `codeblock1` and `codeblock2` when `Template.TemplateName` is rendered.
 
 You can also pass the object as parameter without giving it a string identifier.
 ```javascript
-var electron = Fermions.lepton(function(){
+var electron = TBulter.makeLogic(function(){
     //some code here
 });
-Fermions.quark("TemplateName",[electron]); 
+TBulter.bond("TemplateName",[electron]); 
 ```
 
 #Dependency
 ```javascript
-Fermions.lepton("electron", function(){
+TBulter.makeLogic("electron", function(){
     //some schrodinger's cat here
 });
-Fermions.lepton("muon", function(){
+TBulter.makeLogic("muon", function(){
     //some schrodinger's cat here
 });
-Fermions.lepton("tau", function(){
+TBulter.makeLogic("tau", function(){
     //some schrodinger's cat here
 });
 
-Fermions.quark("downQuark",["electron"]);
-Fermions.quark("upQuark",["muon"]).depends(["downQuark"]); //name of the quark(s) to depend on
-Fermions.quark("upQuark",["tau"]);
+TBulter.bond("downQuark",["electron"]);
+TBulter.bond("upQuark",["muon"]).depends(["downQuark"]); //name of the bond(s) to depend on
+TBulter.bond("upQuark",["tau"]);
 ```
 After `Template.upQuark` is rendered, `muon` would not be called until `Template.downQuark` is rendered. However, `tau` would be called immediately after `Template.upQuark` is rendered because it does not depend on anything.
 
 
-Note: Unless an object `{TemplateName:"quarkName"}` is passed as the 1st arguement, a quark would have the same name as the Template.
+Note: Unless an object `{TemplateName:"bondName"}` is passed as the 1st arguement, a bond would have the same name as the Template.
 
 ```javascript
-Fermions.quark({TemplateName:"quarkName"},["codeblock1","codeblock2"]);
-Fermions.quark("upQuark",["muon"]).depends(["quarkName"]);
+TBulter.bond({TemplateName:"bondName"},["codeblock1","codeblock2"]);
+TBulter.bond("upQuark",["muon"]).depends(["bondName"]);
 ```
-
 
 #Setting variables when Template.created
 ```javascript
-Fermions.lepton("electron", function(){
-    console.log(Fermions.waveFunction /* this is just a variable*/);
+TBulter.makeLogic("electron", function(){
+    console.log(TBulter.waveFunction /* this is just a variable*/);
 });
-Fermions.quark("downQuark",["electron"],{waveFunction:"collapsed"});
-Fermions.quark("upQuark",["electron"],{waveFunction:"psi"});
+TBulter.bond("downQuark",["electron"],{waveFunction:"collapsed"});
+TBulter.bond("upQuark",["electron"],{waveFunction:"psi"});
 ```
 This would log "collapsed" after `Template.downQuark` is rendered, and "psi" after `Template.upQuark` is rendered.
 
 #On Template.destroyed
 
 ```javascript
-Fermions.lepton("neutrino", function(){
+TBulter.makeLogic("neutrino", function(){
     //code here would be called on Template.rendered
 },function(){
    //code here would be called on Template.destroyed
 });
-Fermions.quark("charmQuark",["neutrino"]); 
+TBulter.bond("charmQuark",["neutrino"]); 
 ```
 
-The 2nd function that is passed into the `.lepton` would be called on `Template.destroyed`.
+The 2nd function that is passed into the `.makeLogic` would be called on `Template.destroyed`.
 
 This is another way of doing it:
 
 ```javascript
-Fermions.quark("charmQuark",[Fermions.lepton(function(){
+TBulter.bond("charmQuark",[TBulter.makeLogic(function(){
     //code here would be called on Template.rendered
 },function(){
    //code here would be called on Template.destroyed
@@ -96,22 +94,22 @@ Fermions.quark("charmQuark",[Fermions.lepton(function(){
 #Mobile view
 
 ```javascript
-Fermions.mobileView(700); //this would assume that it is a mobile device if the window's width is smaller than 700px
-Fermions.lepton("neutrino", function(){
+TBulter.mobileView(700); //this would assume that it is a mobile device if the window's width is smaller than 700px
+TBulter.makeLogic("neutrino", function(){
     //called no matter if it is a mobile device or not
 }).addToFn("mobile",function(){
    //called if it is a morible device
 }).addToFn("default",function(){
   //called if it is not a mobile device
 });
-Fermions.quark("topQuark",["neutrino"]); 
+TBulter.bond("topQuark",["neutrino"]); 
 ```
 
-If `Fermions.mobileView(max_width)` is not called, the function in `addToFn("default",function)` would always be called. 
+If `TBulter.mobileView(max_width)` is not called, the function in `addToFn("default",function)` would always be called. 
 
-You can always append more code into the lepton by using `.addToFn`.
+You can always append more code into the makeLogic by using `.addToFn`.
 
-#Cleaning up the function(s) in a lepton
+#Cleaning up the function(s) in a makeLogic
 ```javascript
 electron.reset() //reset both default and mobile
 electron.reset("mobile") //only reset mobile
