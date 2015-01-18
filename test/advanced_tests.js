@@ -20,8 +20,14 @@ Tinytest.addAsync('quark with leptons (depends on other quarks): waiting', funct
 
 });
 
-Tinytest.addAsync('quark with leptons (depends on other quarks): loaded', function(test, complete) {
+Tinytest.addAsync('quark with leptons (depends on other quarks): loaded && reset', function(test, complete) {
     lepton.reset();
+    /*this is to test Butler.reset*/
+    lepton.addToFn("default",function(){
+        test.fail();
+    });
+    Butler.reset("test2");
+    /*Butler.reset test ends */
     lepton.addToFn("default", function() {
         test.ok();
         complete();

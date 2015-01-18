@@ -109,9 +109,12 @@ If `Butler.mobileView(max_width)` is not called, the function in `addToFn("defau
 
 You can always append more code into the makeLogic by using `.addToFn`.
 
-#Cleaning up the function(s) in a makeLogic
+#Cleaning up the function(s) in a code block
 ```javascript
+var electron = Butler.makeLogic("codeblock1", function(){
+});
 electron.reset() //reset both default and mobile
+Bulter.reset('codeblock1'); //alternative
 electron.reset("mobile") //only reset mobile
 ```
 
