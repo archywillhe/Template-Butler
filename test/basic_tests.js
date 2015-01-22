@@ -1,10 +1,7 @@
-Tinytest.add('init', function (test) {  
-    Butler("default");
-});
-
 Tinytest.addAsync('independent quark with leptons', function (test,complete) {  
     var cubism = Butler.makeLogic();
     cubism.addToFn("default",function(){
+        console.log(this);
         $("body").append("<div id='archy'/>");
     });
     var lepton = Butler.makeLogic("test");

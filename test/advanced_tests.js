@@ -42,10 +42,12 @@ Tinytest.addAsync('On Template.destroyed', function(test, complete) {
         function() {
             d = 1;
             view = Blaze.currentView;
+            console.log(this);
             Blaze.remove(view);
         },
         function() {
             test.equal(d, 1);
+            console.log(this);
             complete();
         });
     Butler.bond("q", ["z"]);
