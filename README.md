@@ -1,124 +1,125 @@
-#What is Butler
+## What is Template Butler ##
 
-Butler (aka Template Butler) is a library for writing reusable client-side JS for Templates on Meteor. It is designed for apps with sophisticated DOM view logic.
+Template Butler (or TButler) is a library for writing reusable client-side JS for Templates on Meteor. It is designed for apps with sophisticated DOM view logic.
 
-#QuickStart
-Add Butler to your Meteor project
+## QuickStart ##
+Add Template Butler to your Meteor project
 ```bash
 meteor add arch:template-butler
 ```
 
 
-#Basic Usage
+## Basic Usage ##
 
+You can use either `TemplateButler` or `TButler`. They both refer to the same object.
 
 ```javascript
-Butler.makeLogic("codeblock1", function(){
+TButler.code("codeblock1", function(){
     //some code here
 });
-Butler.makeLogic("codeblock2", function(){
+TButler.code("codeblock2", function(){
     //some code here
 });
-Butler.bond("TemplateName",["codeblock1","codeblock2"]); 
+TButler.process("TemplateName",["codeblock1","codeblock2"]); 
 ```
 
 This would call `codeblock1` and `codeblock2` when `Template.TemplateName` is rendered.
 
 You can also pass the object as parameter without giving it a string identifier.
 ```javascript
-var electron = Butler.makeLogic(function(){
+var someVariable = TButler.code(function(){
     //some code here
 });
-Butler.bond("TemplateName",[electron]); 
+TButler.process("TemplateName",[someVariable]); 
 ```
 
-#Dependency
+## Dependency ##
 ```javascript
-Butler.makeLogic("electron", function(){
-    //some schrodinger's cat here
+TButler.code("a", function(){
+    //some functions here
 });
-Butler.makeLogic("muon", function(){
-    //some schrodinger's cat here
+TButler.code("b", function(){
+    //some functions here
 });
-Butler.makeLogic("tau", function(){
-    //some schrodinger's cat here
+TButler.code("x", function(){
+    //some functions here
 });
 
-Butler.bond("downQuark",["electron"]);
-Butler.bond("upQuark",["muon"]).depends(["downQuark"]); //name of the bond(s) to depend on
-Butler.bond("upQuark",["tau"]);
+TButler.process("Archy",["a"]);
+TButler.process("Cat",["b"]).depends(["Archy"]); //name of the process(s) to depend on
+TButler.process("Cat",["x"]);
 ```
-After `Template.upQuark` is rendered, `muon` would not be called until `Template.downQuark` is rendered. However, `tau` would be called immediately after `Template.upQuark` is rendered because it does not depend on anything.
+After `Template.Cat` is rendered, `b` would not be called until `Template.Archy` is rendered. However, `x` would be called immediately after `Template.Cat` is rendered because it does not depend on anything.
 
 
-Note: Unless an object `{TemplateName:"bondName"}` is passed as the 1st arguement, a bond would have the same name as the Template.
+Note: Unless an object `{TemplateName:"processName"}` is passed as the 1st arguement, a process would have the same name as the Template.
 
 ```javascript
-Butler.bond({TemplateName:"bondName"},["codeblock1","codeblock2"]);
-Butler.bond("upQuark",["muon"]).depends(["bondName"]);
+TButler.process({TemplateName:"processName"},["codeblock1","codeblock2"]);
+TButler.process("Cat",["b"]).depends(["processName"]);
 ```
 
-#Setting variables when Template.created
+## Setting variables on Template.created ##
 ```javascript
-Butler.makeLogic("electron", function(){
-    console.log(Butler.waveFunction /* this is just a variable*/);
+TButler.code("a", function(){
+    console.log(TButler.env.key);
 });
-Butler.bond("downQuark",["electron"],{waveFunction:"collapsed"});
-Butler.bond("upQuark",["electron"],{waveFunction:"psi"});
+TButler.process("Archy",["a"],{key:"value1"});
+TButler.process("Cat",["a"],{key:"value2"});
 ```
-This would log "collapsed" after `Template.downQuark` is rendered, and "psi" after `Template.upQuark` is rendered.
+This would log "value1" after `Template.Archy` is rendered, and "value2" after `Template.Cat` is rendered.
 
-#On Template.destroyed
+## On Template.destroyed ##
 
 ```javascript
-Butler.makeLogic("neutrino", function(){
-    //code here would be called on Template.rendered
+TButler.code("c", function(){
+    //functions here would be called on Template.rendered
 },function(){
-   //code here would be called on Template.destroyed
+   //functions here would be called on Template.destroyed
 });
-Butler.bond("charmQuark",["neutrino"]); 
+TButler.process("_footer",["c"]); 
 ```
 
-The 2nd function that is passed into the `.makeLogic` would be called on `Template.destroyed`.
+The 2nd function that is passed into the `.code` would be called on `Template.destroyed`.
 
 This is another way of doing it:
 
 ```javascript
-Butler.bond("charmQuark",[Butler.makeLogic(function(){
+TButler.process("_footer",[TButler.code(function(){
     //code here would be called on Template.rendered
 },function(){
    //code here would be called on Template.destroyed
 })]); 
 ```
 
-#Mobile view
+## Mobile view ##
 
 ```javascript
-Butler.mobileView(700); //this would assume that it is a mobile device if the window's width is smaller than 700px
-Butler.makeLogic("neutrino", function(){
+TButler.mobileView(700); //this would assume that it is a mobile device if the window's width is smaller than 700px
+TButler.code("c", function(){
     //called no matter if it is a mobile device or not
 }).addToFn("mobile",function(){
    //called if it is a morible device
 }).addToFn("default",function(){
   //called if it is not a mobile device
 });
-Butler.bond("topQuark",["neutrino"]); 
+TButler.process("appLayout",["c"]); 
 ```
 
-If `Butler.mobileView(max_width)` is not called, the function in `addToFn("default",function)` would always be called. 
+If `TButler.mobileView(max_width)` is not called, the function in `addToFn("default",function)` would always be called. 
 
-You can always append more code into the makeLogic by using `.addToFn`.
+You can always append more code into the code by using `.addToFn`.
 
-#Cleaning up the function(s) in a code block
+## Cleaning up the function(s) in a code block ##
 ```javascript
-var electron = Butler.makeLogic("codeblock1", function(){
+var a = TButler.code("codeblock1", function(){
 });
-electron.reset() //reset both default and mobile
+a.reset() //reset both default and mobile
 Bulter.reset('codeblock1'); //alternative
-electron.reset("mobile") //only reset mobile
+a.reset("mobile") //only reset mobile
 ```
 
-#License
+## License ##
 
 "THE BEER-WARE LICENSE" (Revision 42):
 
