@@ -1,7 +1,7 @@
 Package.describe({
     name: 'arch:template-butler',
     summary: 'writing DRY client-side JS with dependency for templates',
-    version: '2.0.0',
+    version: '2.0.3',
     git: 'https://github.com/0a-/Template-Butler'
 });
 
