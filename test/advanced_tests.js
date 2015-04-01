@@ -12,7 +12,7 @@ Tinytest.addAsync('quark with leptons (depends on other quarks): waiting', funct
     Template.quark = new Blaze.Template("Template.quark", function() {});
     var quark = TButler.process("quark", [cubism, "test2"]);
     var depend = TButler.process("depend");
-    quark.bondsToDependOn = ["depend"];
+    quark.processesToDependOn = ["depend"];
     Blaze.render(Template.quark, $("body")[0]);
     setTimeout(function() {
         complete();
